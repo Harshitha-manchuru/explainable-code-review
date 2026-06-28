@@ -1,0 +1,56 @@
+[
+  {
+    "rule_id": "GOOGLE-DOCSTRING",
+    "source": "Google Python Style Guide",
+    "title": "Functions must have docstrings",
+    "linter_codes": ["D100", "D103", "MISSING_DOCSTRING"],
+    "rationale": "The Google Python Style Guide requires that every function have a docstring unless it is not externally visible, short, and obvious, because docstrings document the function's purpose, arguments, return values, and exceptions for future readers.",
+    "bad_example": "def process(data):\n    return [x * 2 for x in data]",
+    "good_example": "def process(data):\n    \"\"\"Doubles every value in the input list.\n\n    Args:\n        data: A list of numeric values.\n\n    Returns:\n        A new list with each value doubled.\n    \"\"\"\n    return [x * 2 for x in data]"
+  },
+  {
+    "rule_id": "GOOGLE-MUTABLE-DEFAULT",
+    "source": "Google Python Style Guide",
+    "title": "Avoid mutable default arguments",
+    "linter_codes": ["B006", "MUTABLE_DEFAULT"],
+    "rationale": "The Google Python Style Guide warns against using mutable objects such as lists or dictionaries as default argument values, because default values are evaluated once at function definition time and shared across all calls, leading to unexpected accumulation of state.",
+    "bad_example": "def add_item(item, items=[]):\n    items.append(item)\n    return items",
+    "good_example": "def add_item(item, items=None):\n    if items is None:\n        items = []\n    items.append(item)\n    return items"
+  },
+  {
+    "rule_id": "GOOGLE-IMPORT-STAR",
+    "source": "Google Python Style Guide",
+    "title": "Avoid wildcard imports",
+    "linter_codes": ["F403", "F401"],
+    "rationale": "The Google Python Style Guide states that wildcard imports such as 'from module import *' should be avoided because they make it unclear which names are present in the namespace, confusing both readers and many automated tools.",
+    "bad_example": "from os import *\n\npath = getcwd()",
+    "good_example": "from os import getcwd\n\npath = getcwd()"
+  },
+  {
+    "rule_id": "GOOGLE-TYPE-ANNOTATION",
+    "source": "Google Python Style Guide",
+    "title": "Use type annotations for function signatures",
+    "linter_codes": ["ANN001", "ANN201"],
+    "rationale": "The Google Python Style Guide encourages annotating function arguments and return types so that static type checkers and readers can verify correct usage without reading the full function body.",
+    "bad_example": "def total_price(items, tax_rate):\n    return sum(items) * (1 + tax_rate)",
+    "good_example": "def total_price(items: list[float], tax_rate: float) -> float:\n    return sum(items) * (1 + tax_rate)"
+  },
+  {
+    "rule_id": "GOOGLE-EXCEPTION-NAMING",
+    "source": "Google Python Style Guide",
+    "title": "Do not use bare except clauses",
+    "linter_codes": ["E722", "BARE_EXCEPT"],
+    "rationale": "The Google Python Style Guide recommends always specifying the exception type being caught rather than using a bare 'except:' clause, because bare except clauses silently swallow unrelated errors such as KeyboardInterrupt or SystemExit and make debugging difficult.",
+    "bad_example": "try:\n    risky_operation()\nexcept:\n    pass",
+    "good_example": "try:\n    risky_operation()\nexcept ValueError as exc:\n    logging.error(\"Operation failed: %s\", exc)"
+  },
+  {
+    "rule_id": "GOOGLE-GLOBAL-VARS",
+    "source": "Google Python Style Guide",
+    "title": "Avoid global variables",
+    "linter_codes": ["GLOBAL_STATE"],
+    "rationale": "The Google Python Style Guide discourages module-level mutable global state because it creates hidden coupling between functions, makes unit testing harder, and can cause subtle bugs when functions are called in an unexpected order.",
+    "bad_example": "counter = 0\n\ndef increment():\n    global counter\n    counter += 1",
+    "good_example": "class Counter:\n    def __init__(self):\n        self.value = 0\n\n    def increment(self):\n        self.value += 1"
+  }
+]

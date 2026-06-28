@@ -1,0 +1,83 @@
+[
+  {
+    "rule_id": "PEP8-E211",
+    "source": "PEP8",
+    "title": "Whitespace before parenthesis or bracket",
+    "linter_codes": ["E211"],
+    "rationale": "PEP 8 states that whitespace should be avoided immediately before the open parenthesis that starts the argument list of a function call, and immediately before the open bracket that starts an indexing or slicing operation.",
+    "bad_example": "spam (1)",
+    "good_example": "spam(1)"
+  },
+  {
+    "rule_id": "PEP8-E225",
+    "source": "PEP8",
+    "title": "Missing whitespace around operator",
+    "linter_codes": ["E225", "E226", "E227", "E228"],
+    "rationale": "PEP 8 recommends surrounding binary operators with a single space on either side to improve readability, with the exception of using no spaces around the highest priority operator when arguments are simple.",
+    "bad_example": "x=1\ny = x*2+1",
+    "good_example": "x = 1\ny = x * 2 + 1"
+  },
+  {
+    "rule_id": "PEP8-E231",
+    "source": "PEP8",
+    "title": "Missing whitespace after comma",
+    "linter_codes": ["E231"],
+    "rationale": "PEP 8 specifies that commas, semicolons, and colons should always be followed by whitespace unless followed by the end of a line or a closing bracket.",
+    "bad_example": "def f(a,b,c):\n    return [a,b,c]",
+    "good_example": "def f(a, b, c):\n    return [a, b, c]"
+  },
+  {
+    "rule_id": "PEP8-E301",
+    "source": "PEP8",
+    "title": "Expected blank lines between functions and classes",
+    "linter_codes": ["E301", "E302", "E303"],
+    "rationale": "PEP 8 specifies surrounding top-level function and class definitions with two blank lines, and method definitions inside a class with one blank line, to visually separate logical units of code.",
+    "bad_example": "class Foo:\n    def bar(self):\n        pass\n    def baz(self):\n        pass",
+    "good_example": "class Foo:\n    def bar(self):\n        pass\n\n    def baz(self):\n        pass"
+  },
+  {
+    "rule_id": "PEP8-E501",
+    "source": "PEP8",
+    "title": "Line too long",
+    "linter_codes": ["E501"],
+    "rationale": "PEP 8 limits all lines to a maximum of 79 characters for code, since long lines reduce readability on smaller screens and in side-by-side diffs.",
+    "bad_example": "result = some_function(argument_one, argument_two, argument_three, argument_four, argument_five)",
+    "good_example": "result = some_function(\n    argument_one, argument_two, argument_three,\n    argument_four, argument_five,\n)"
+  },
+  {
+    "rule_id": "PEP8-E711",
+    "source": "PEP8",
+    "title": "Comparison to None should use 'is'",
+    "linter_codes": ["E711", "E712"],
+    "rationale": "PEP 8 states that comparisons to singletons like None should always be done with 'is' or 'is not', never with the equality operators, because identity comparison is unambiguous and faster.",
+    "bad_example": "if value == None:\n    pass",
+    "good_example": "if value is None:\n    pass"
+  },
+  {
+    "rule_id": "PEP8-N802",
+    "source": "PEP8",
+    "title": "Function names should be lowercase",
+    "linter_codes": ["N802", "N803"],
+    "rationale": "PEP 8 specifies that function and variable names should be lowercase, with words separated by underscores as necessary to improve readability, following the snake_case convention.",
+    "bad_example": "def CalculateTotal(Items):\n    return sum(Items)",
+    "good_example": "def calculate_total(items):\n    return sum(items)"
+  },
+  {
+    "rule_id": "PEP8-N801",
+    "source": "PEP8",
+    "title": "Class names should use CapWords",
+    "linter_codes": ["N801"],
+    "rationale": "PEP 8 specifies that class names should normally use the CapWords (PascalCase) convention to visually distinguish classes from functions and variables.",
+    "bad_example": "class user_account:\n    pass",
+    "good_example": "class UserAccount:\n    pass"
+  },
+  {
+    "rule_id": "PEP8-E101",
+    "source": "PEP8",
+    "title": "Indentation contains mixed spaces and tabs",
+    "linter_codes": ["E101", "W191"],
+    "rationale": "PEP 8 mandates using 4 spaces per indentation level and explicitly states that spaces are the preferred indentation method, with tabs reserved only for maintaining consistency with code already indented with tabs.",
+    "bad_example": "def f():\n\tif True:\n        pass",
+    "good_example": "def f():\n    if True:\n        pass"
+  }
+]

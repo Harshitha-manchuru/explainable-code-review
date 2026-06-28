@@ -1,0 +1,74 @@
+[
+  {
+    "rule_id": "ANTI-EVAL-USE",
+    "source": "Anti-Pattern",
+    "title": "Avoid using eval() on untrusted input",
+    "linter_codes": ["S307", "EVAL_USAGE"],
+    "rationale": "Using eval() to execute arbitrary strings as Python code is a well-documented anti-pattern because it can execute malicious code if any part of the input string originates from an untrusted source, and it also makes the program's behavior difficult to statically analyze.",
+    "bad_example": "user_input = input(\"Enter expression: \")\nresult = eval(user_input)",
+    "good_example": "import ast\nuser_input = input(\"Enter expression: \")\nresult = ast.literal_eval(user_input)"
+  },
+  {
+    "rule_id": "ANTI-BROAD-EXCEPT",
+    "source": "Anti-Pattern",
+    "title": "Avoid catching the base Exception class broadly",
+    "linter_codes": ["W0703", "BROAD_EXCEPT"],
+    "rationale": "Catching the generic Exception class is considered an anti-pattern because it hides the specific type of failure, makes it impossible to handle different error conditions differently, and can mask programming errors as if they were expected runtime conditions.",
+    "bad_example": "try:\n    parse_file(path)\nexcept Exception as e:\n    print(\"error\")",
+    "good_example": "try:\n    parse_file(path)\nexcept (FileNotFoundError, ValueError) as e:\n    logging.error(\"Failed to parse %s: %s\", path, e)"
+  },
+  {
+    "rule_id": "ANTI-STRING-CONCAT-LOOP",
+    "source": "Anti-Pattern",
+    "title": "Avoid string concatenation in a loop",
+    "linter_codes": ["STRING_CONCAT_LOOP"],
+    "rationale": "Repeatedly concatenating strings inside a loop using the + operator is an anti-pattern because each concatenation creates a new string object, resulting in quadratic time complexity for what should be a linear operation; using str.join or a list buffer is the recommended alternative.",
+    "bad_example": "result = \"\"\nfor word in words:\n    result += word + \" \"",
+    "good_example": "result = \" \".join(words)"
+  },
+  {
+    "rule_id": "ANTI-TYPE-COMPARE",
+    "source": "Anti-Pattern",
+    "title": "Avoid comparing types with == instead of isinstance",
+    "linter_codes": ["TYPE_EQUALITY"],
+    "rationale": "Comparing an object's type directly using '== type(x)' is an anti-pattern because it breaks polymorphism and fails for subclasses, whereas isinstance() correctly accounts for inheritance hierarchies.",
+    "bad_example": "if type(value) == list:\n    process_list(value)",
+    "good_example": "if isinstance(value, list):\n    process_list(value)"
+  },
+  {
+    "rule_id": "ANTI-UNUSED-VARIABLE",
+    "source": "Anti-Pattern",
+    "title": "Avoid unused variables",
+    "linter_codes": ["F841", "W0612"],
+    "rationale": "Assigning a value to a variable that is never subsequently used is an anti-pattern because it indicates either dead code, an incomplete refactor, or a logic error where the wrong variable was referenced, and it adds noise that obscures the program's real behavior.",
+    "bad_example": "def compute(a, b):\n    total = a + b\n    result = a * b\n    return total",
+    "good_example": "def compute(a, b):\n    total = a + b\n    return total"
+  },
+  {
+    "rule_id": "ANTI-NESTED-LOOPS-DEEP",
+    "source": "Anti-Pattern",
+    "title": "Avoid deeply nested loops and conditionals",
+    "linter_codes": ["TOO_MANY_NESTED_BLOCKS", "R1702"],
+    "rationale": "Deeply nested loops and conditional blocks are an anti-pattern because each additional level of nesting increases cyclomatic complexity and makes the code substantially harder to read, test, and reason about; extracting nested logic into separate functions is the recommended fix.",
+    "bad_example": "for i in items:\n    if i.valid:\n        for j in i.children:\n            if j.active:\n                for k in j.tags:\n                    process(k)",
+    "good_example": "def process_active_children(item):\n    for child in item.children:\n        if child.active:\n            for tag in child.tags:\n                process(tag)\n\nfor i in items:\n    if i.valid:\n        process_active_children(i)"
+  },
+  {
+    "rule_id": "ANTI-MAGIC-NUMBERS",
+    "source": "Anti-Pattern",
+    "title": "Avoid unexplained magic numbers",
+    "linter_codes": ["MAGIC_NUMBER"],
+    "rationale": "Embedding unexplained numeric literals directly in logic is an anti-pattern because the meaning and origin of the value is lost to future readers; assigning the value to a named constant documents its purpose and makes future changes a single-point edit.",
+    "bad_example": "if age > 17:\n    grant_access()",
+    "good_example": "LEGAL_ADULT_AGE = 18\n\nif age >= LEGAL_ADULT_AGE:\n    grant_access()"
+  },
+  {
+    "rule_id": "ANTI-RETURN-INCONSISTENT",
+    "source": "Anti-Pattern",
+    "title": "Avoid inconsistent return types from a single function",
+    "linter_codes": ["R1710", "INCONSISTENT_RETURN"],
+    "rationale": "A function that returns a value in one branch but implicitly returns None in another is an anti-pattern because callers cannot predict the return type without reading the full function body, increasing the risk of AttributeError or TypeError downstream.",
+    "bad_example": "def find_user(user_id, users):\n    for u in users:\n        if u.id == user_id:\n            return u",
+    "good_example": "def find_user(user_id, users):\n    for u in users:\n        if u.id == user_id:\n            return u\n    return None"
+  }
+]
